@@ -1,6 +1,8 @@
 import pygame
 
 
+pygame.init()
+
 white = pygame.Color(255, 255, 255)
 black = pygame.Color(0, 0, 0)
 
@@ -13,6 +15,11 @@ display = pygame.display.set_mode([window_width, window_height])
 pygame.display.set_caption("Conga")
 clock = pygame.time.Clock()
 
+font = pygame.font.SysFont("Arial Bold", 50)
+
+
+board = [[0 for i in range(4)] for j in range(4)]
+
 
 def update():
     pass
@@ -22,8 +29,13 @@ def draw():
     # Draw grid
     for x in range(4):
         for y in range(4):
-            rect = pygame.Rect(x*cell_size, y*cell_size, cell_size, cell_size)
+            rect = pygame.Rect(x*cell_size, (3-y)*cell_size, cell_size, cell_size)
             pygame.draw.rect(display, black, rect, 1)
+
+            if board[x][y] != 0:
+                text = font.render(str(board[x][y]), False, black)
+                text_pos = [rect.x + cell_size / 8, rect.y + cell_size / 8]
+                display.blit(text, text_pos)
 
 
 def run():
@@ -43,7 +55,6 @@ def run():
 
 
 def main():
-    pygame.init()
     run()
     pygame.quit()
 
