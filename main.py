@@ -4,8 +4,12 @@ import pygame
 white = pygame.Color(255, 255, 255)
 black = pygame.Color(0, 0, 0)
 
+window_width = 600
+window_height = 600
 
-display = pygame.display.set_mode([800, 600])
+cell_size = int(window_height / 4)
+
+display = pygame.display.set_mode([window_width, window_height])
 pygame.display.set_caption("Conga")
 clock = pygame.time.Clock()
 
@@ -15,7 +19,11 @@ def update():
 
 
 def draw():
-    pass
+    # Draw grid
+    for x in range(4):
+        for y in range(4):
+            rect = pygame.Rect(x*cell_size, y*cell_size, cell_size, cell_size)
+            pygame.draw.rect(display, black, rect, 1)
 
 
 def run():
