@@ -10,6 +10,14 @@ pygame.display.set_caption("Conga")
 clock = pygame.time.Clock()
 
 
+def update():
+    pass
+
+
+def draw():
+    pass
+
+
 def run():
     running = True
     while running:
@@ -18,6 +26,9 @@ def run():
                 running = False
 
         display.fill(white)
+
+        update()
+        draw()
 
         pygame.display.update()
         clock.tick(60)
