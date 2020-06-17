@@ -26,8 +26,8 @@ class GameStateMachine:
                 self.prev_pos = cell_pos
                 print("Choose cell:", cell_pos)
         elif self.current_state == State.CHOOSE_DIRECTION:
-            direction = self.get_direction(self.prev_pos, cell_pos)
-            if self.check_move(direction):
+            # direction = self.get_direction(self.prev_pos, cell_pos)
+            if self.check_move(self.prev_pos, cell_pos):
                 self.current_state = State.CHOOSE_CELL
                 print(self.board.move(self.prev_pos, cell_pos))
                 print("Choose direction:", cell_pos)
@@ -36,8 +36,8 @@ class GameStateMachine:
         src = self.board.board[src_pos[0]][src_pos[1]]
         return src.colour is not None
 
-    def check_move(self, direction):
-        [dx, dy] = direction
+    def check_move(self, src_pos, dest_pos):
+        [dx, dy] = self.get_direction(src_pos, dest_pos)
 
         if dx != 0 and abs(dx) != 2:
             return False
@@ -46,6 +46,17 @@ class GameStateMachine:
             return False
 
         if dx == 0 and dy == 0:
+            return False
+
+        middle_pos = [src_pos[0] + int(dx / 2), src_pos[1] + int(dy / 2)]
+        src = self.board.board[src_pos[0]][src_pos[1]]
+        middle = self.board.board[middle_pos[0]][middle_pos[1]]
+        dest = self.board.board[dest_pos[0]][dest_pos[1]]
+
+        if middle.colour is not None and middle.colour != src.colour:
+            return False
+
+        if dest.colour is not None and dest.colour != src.colour:
             return False
 
         return True
