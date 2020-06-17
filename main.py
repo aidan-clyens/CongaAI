@@ -36,6 +36,12 @@ def run(board):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            elif event.type == pygame.MOUSEBUTTONUP:
+                mouse_pos = pygame.mouse.get_pos()
+                cell_pos = [
+                    int(mouse_pos[0] / cell_size),
+                    int(4 - mouse_pos[1] / cell_size)
+                ]
 
         display.fill(grey)
 
