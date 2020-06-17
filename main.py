@@ -58,8 +58,8 @@ def main():
     font = pygame.font.SysFont("Arial Bold", 50)
 
     # Init game board
-    game_sm = GameStateMachine()
     board = Conga()
+    game_sm = GameStateMachine(board)
 
     # Run game
     run(board, game_sm)
