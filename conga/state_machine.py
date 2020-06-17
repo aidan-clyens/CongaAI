@@ -21,14 +21,13 @@ class GameStateMachine:
 
         if self.current_state == State.CHOOSE_CELL:
             self.current_state = State.CHOOSE_DIRECTION
+            self.prev_pos = cell_pos
             print("Choose cell:", cell_pos)
         elif self.current_state == State.CHOOSE_DIRECTION:
-            self.current_state = State.CHOOSE_CELL
             valid = self.check_move(self.prev_pos, cell_pos)
-            print("Choose direction:", cell_pos)
-            print("Valid:", valid)
-
-        self.prev_pos = cell_pos
+            if (valid):
+                self.current_state = State.CHOOSE_CELL
+                print("Choose direction:", cell_pos)
 
     def check_move(self, src_pos, dest_pos):
         dx = abs(src_pos[0] - dest_pos[0])
