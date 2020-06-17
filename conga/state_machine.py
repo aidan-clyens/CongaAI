@@ -59,3 +59,12 @@ class GameStateMachine:
                 return False
 
         return True
+
+    def get_all_valid_moves(self, src_pos):
+        moves = []
+        for x in range(4):
+            for y in range(4):
+                if self.check_move(src_pos, [x, y]):
+                    moves.append([x, y])
+
+        return moves
