@@ -63,6 +63,15 @@ class GameBoard:
 
         return cells
 
+    def get_cells(self, colour):
+        cells = []
+        for x in range(4):
+            for y in range(4):
+                if self.board[x][y].colour == colour:
+                    cells.append([x, y])
+
+        return cells
+
 
 class Cell:
     def __init__(self, colour=None, num_stones=0):

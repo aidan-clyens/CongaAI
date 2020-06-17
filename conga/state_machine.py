@@ -34,6 +34,9 @@ class GameStateMachine:
                     self.current_player = black
                 elif self.current_player == black:
                     self.current_player = white
+                # Check lose condition
+                if len(self.get_all_moves(self.current_player)) == 0:
+                    print(self.current_player, "loses!")
 
     def check_cell(self, src_pos):
         src = self.board.board[src_pos[0]][src_pos[1]]
@@ -60,7 +63,14 @@ class GameStateMachine:
 
         return True
 
-    def get_all_valid_moves(self, src_pos):
+    def get_all_moves(self, player):
+        moves = []
+        for cell in self.board.get_cells(player):
+            moves += self.get_all_moves_from_src(cell)
+
+        return moves
+
+    def get_all_moves_from_src(self, src_pos):
         moves = []
         for x in range(4):
             for y in range(4):
