@@ -4,6 +4,7 @@ import pygame
 pygame.init()
 
 white = pygame.Color(255, 255, 255)
+grey = pygame.Color(127, 127, 127)
 black = pygame.Color(0, 0, 0)
 
 window_width = 600
@@ -47,7 +48,7 @@ def run():
             if event.type == pygame.QUIT:
                 running = False
 
-        display.fill(white)
+        display.fill(grey)
 
         update()
         draw()
