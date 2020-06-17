@@ -1,6 +1,6 @@
 from enum import Enum
 
-from .constants import cell_size
+from .constants import cell_size, black, white
 
 
 class State(Enum):
@@ -12,6 +12,7 @@ class GameStateMachine:
     def __init__(self, board):
         self.board = board
         self.current_state = State.CHOOSE_CELL
+        self.current_player = black
         self.prev_pos = []
 
     def update(self, mouse_pos):
@@ -28,10 +29,15 @@ class GameStateMachine:
             if self.check_move(self.prev_pos, cell_pos):
                 self.current_state = State.CHOOSE_CELL
                 self.board.move(self.prev_pos, cell_pos)
+                # Change player after a successful move
+                if self.current_player == white:
+                    self.current_player = black
+                elif self.current_player == black:
+                    self.current_player = white
 
     def check_cell(self, src_pos):
         src = self.board.board[src_pos[0]][src_pos[1]]
-        return src.colour is not None
+        return src.colour is not None and src.colour == self.current_player
 
     def check_move(self, src_pos, dest_pos):
         [dx, dy] = self.board.get_direction(src_pos, dest_pos)
