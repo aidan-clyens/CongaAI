@@ -36,7 +36,10 @@ def draw(board):
             cell = board[x][y]
             if cell.num_stones != 0:
                 text = font.render(str(cell.num_stones), False, cell.colour)
-                text_pos = [rect.x + cell_size / 8, rect.y + cell_size / 8]
+                text_pos = [
+                    rect.x + int(cell_size / 8),
+                    rect.y + int(cell_size / 8)
+                ]
                 display.blit(text, text_pos)
 
 
