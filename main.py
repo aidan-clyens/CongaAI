@@ -19,9 +19,15 @@ clock = pygame.time.Clock()
 font = pygame.font.SysFont("Arial Bold", 50)
 
 
-board = [[0 for i in range(4)] for j in range(4)]
-board[0][3] = 10
-board[3][0] = 10
+class Cell:
+    def __init__(self, colour=None, num_stones=0):
+        self.colour = colour
+        self.num_stones = num_stones
+
+
+board = [[Cell() for i in range(4)] for j in range(4)]
+board[0][3] = Cell(white, 10)
+board[3][0] = Cell(black, 10)
 
 
 def update():
@@ -35,8 +41,9 @@ def draw():
             rect = pygame.Rect(x*cell_size, (3-y)*cell_size, cell_size, cell_size)
             pygame.draw.rect(display, black, rect, 1)
 
-            if board[x][y] != 0:
-                text = font.render(str(board[x][y]), False, black)
+            cell = board[x][y]
+            if cell.num_stones != 0:
+                text = font.render(str(cell.num_stones), False, cell.colour)
                 text_pos = [rect.x + cell_size / 8, rect.y + cell_size / 8]
                 display.blit(text, text_pos)
 
