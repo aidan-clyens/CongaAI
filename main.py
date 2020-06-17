@@ -1,20 +1,7 @@
 import pygame
 
-
-white = pygame.Color(255, 255, 255)
-grey = pygame.Color(127, 127, 127)
-black = pygame.Color(0, 0, 0)
-
-window_width = 600
-window_height = 600
-
-cell_size = int(window_height / 4)
-
-
-class Cell:
-    def __init__(self, colour=None, num_stones=0):
-        self.colour = colour
-        self.num_stones = num_stones
+from conga import Conga
+from conga import window_width, window_height, cell_size, grey, black
 
 
 def update(board):
@@ -33,7 +20,7 @@ def draw(board):
             )
             pygame.draw.rect(display, black, rect, 1)
 
-            cell = board[x][y]
+            cell = board.board[x][y]
             if cell.num_stones != 0:
                 text = font.render(str(cell.num_stones), False, cell.colour)
                 text_pos = [
@@ -73,9 +60,7 @@ def main():
     font = pygame.font.SysFont("Arial Bold", 50)
 
     # Init game board
-    board = [[Cell() for i in range(4)] for j in range(4)]
-    board[0][3] = Cell(white, 10)
-    board[3][0] = Cell(black, 10)
+    board = Conga()
 
     # Run game
     run(board)
