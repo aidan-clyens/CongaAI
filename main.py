@@ -19,6 +19,8 @@ font = pygame.font.SysFont("Arial Bold", 50)
 
 
 board = [[0 for i in range(4)] for j in range(4)]
+board[0][3] = 10
+board[3][0] = 10
 
 
 def update():
