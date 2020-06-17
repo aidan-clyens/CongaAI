@@ -45,8 +45,15 @@ class GameStateMachine:
         if not ((dx == 0 or dy == 0) or (abs(dx) == abs(dy))):
             return False
 
+        if dx == 0 and dy == 0:
+            return False
+
         cells = self.board.get_middle_cells(src_pos, dest_pos)
         src = self.board.board[src_pos[0]][src_pos[1]]
+
+        if len(cells) > src.num_stones:
+            return False
+
         for cell in cells:
             if cell.colour is not None and cell.colour != src.colour:
                 return False

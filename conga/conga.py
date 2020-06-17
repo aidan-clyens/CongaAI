@@ -17,17 +17,21 @@ class Conga:
             cell.colour = src.colour
 
         if len(cells) == 1:
-            cells[0].num_stones = src.num_stones
+            cells[0].num_stones += src.num_stones
         elif len(cells) == 2:
             cells[0].num_stones += 1
-            cells[1].num_stones = src.num_stones - 1
+            cells[1].num_stones += src.num_stones - 1
         elif len(cells) == 3:
             cells[0].num_stones += 1
             cells[1].num_stones += 2
-            cells[2].num_stones = src.num_stones - 3
+            cells[2].num_stones += src.num_stones - 3
 
         src.num_stones = 0
         src.colour = None
+
+        for cell in cells:
+            if cell.num_stones == 0:
+                cell.colour = None
 
     def get_direction(self, src_pos, dest_pos):
         dx = dest_pos[0] - src_pos[0]
