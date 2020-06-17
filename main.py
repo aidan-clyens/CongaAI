@@ -1,6 +1,6 @@
 import pygame
 
-from conga import Conga, GameStateMachine
+from conga import GameBoard, GameStateMachine
 from conga import window_width, window_height, cell_size, grey, black
 
 
@@ -58,7 +58,7 @@ def main():
     font = pygame.font.SysFont("Arial Bold", 50)
 
     # Init game board
-    board = Conga()
+    board = GameBoard()
     game_sm = GameStateMachine(board)
 
     # Run game

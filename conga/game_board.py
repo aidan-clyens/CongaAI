@@ -1,7 +1,7 @@
 from .constants import white, black
 
 
-class Conga:
+class GameBoard:
     def __init__(self):
         self.board = [[Cell() for i in range(4)] for j in range(4)]
         self.board[0][3] = Cell(white, 10)
