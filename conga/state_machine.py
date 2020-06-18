@@ -62,6 +62,6 @@ class GameStateMachine:
         for x in range(4):
             for y in range(4):
                 if self.check_move(src_pos, [x, y]):
-                    moves.append([x, y])
+                    moves.append([src_pos, [x, y]])
 
         return moves
