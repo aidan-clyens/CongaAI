@@ -15,12 +15,7 @@ class GameStateMachine:
         self.current_player = black
         self.prev_pos = []
 
-    def update(self, mouse_pos):
-        cell_pos = [
-            int(mouse_pos[0] / cell_size),
-            int(4 - mouse_pos[1] / cell_size)
-        ]
-
+    def update(self, cell_pos):
         if self.current_state == State.CHOOSE_CELL:
             if self.check_cell(cell_pos):
                 self.current_state = State.CHOOSE_DIRECTION
