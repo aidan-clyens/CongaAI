@@ -1,6 +1,3 @@
-from .constants import black, white
-
-
 class GameStateMachine:
     def __init__(self, board):
         self.board = board
