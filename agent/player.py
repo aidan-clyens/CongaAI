@@ -43,7 +43,7 @@ class AIPlayer:
     def __init__(self, game_sm, colour):
         self.game_sm = game_sm
         self.colour = colour
-        self.max_depth = 2
+        self.max_depth = 3
 
     def move(self):
         best_move = None
@@ -59,7 +59,7 @@ class AIPlayer:
             score = self.minimax(
                         move,
                         self.game_sm.get_other_player(self.colour),
-                        self.max_depth,
+                        self.max_depth-1,
                         -math.inf,
                         math.inf
                     )
