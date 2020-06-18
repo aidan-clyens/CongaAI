@@ -1,18 +1,10 @@
 import pygame
 import random
-from enum import Enum
 
 from conga import GameBoard, GameStateMachine
 from conga import window_width, window_height, cell_size, white, black, grey
 
-
-class State(Enum):
-    CHOOSE_CELL = 1
-    CHOOSE_DIRECTION = 2
-
-
-prev_pos = []
-current_state = State.CHOOSE_CELL
+from agent import HumanPlayer
 
 
 def get_move(game_sm):
@@ -20,23 +12,11 @@ def get_move(game_sm):
     return random.choice(moves)
 
 
-def update(game_sm, cell_pos):
-    global current_state, prev_pos
-    if current_state == State.CHOOSE_CELL:
-        if game_sm.check_cell(cell_pos):
-            current_state = State.CHOOSE_DIRECTION
-            prev_pos = cell_pos
-    elif current_state == State.CHOOSE_DIRECTION:
-        if game_sm.check_move(prev_pos, cell_pos):
-            current_state = State.CHOOSE_CELL
-            move = [prev_pos, cell_pos]
-            return move
-
-
 def run(board, game_sm):
     running = True
     while running:
         mouse_press = False
+        cell_pos = []
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -49,10 +29,8 @@ def run(board, game_sm):
                 ]
 
         if game_sm.current_player == black:
-            if mouse_press:
-                move = update(game_sm, cell_pos)
-                if move is not None:
-                    game_sm.update(move)
+            move = player_1.update(game_sm, mouse_press, cell_pos)
+            game_sm.update(move)
         else:
             move = get_move(game_sm)
             game_sm.update(move)
@@ -80,6 +58,10 @@ def main():
     # Init game board
     board = GameBoard()
     game_sm = GameStateMachine(board)
+
+    # Init players
+    global player_1
+    player_1 = HumanPlayer()
 
     # Run game
     run(board, game_sm)

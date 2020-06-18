@@ -8,6 +8,8 @@ class GameStateMachine:
         self.prev_pos = []
 
     def update(self, move):
+        if move is None:
+            return
         self.board.move(move[0], move[1])
         # Change player after a successful move
         if self.current_player == white:
