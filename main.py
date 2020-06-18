@@ -22,15 +22,15 @@ def run(board, game_sm):
                     int(4 - mouse_pos[1] / cell_size)
                 ]
 
-        if game_sm.current_player == "black":
-            player_1.move()
-        else:
-            player_2.move()
-
         # Check win condition
         if game_sm.check_win():
             running = False
             print(game_sm.current_player, "wins!")
+
+        if game_sm.current_player == "black":
+            player_1.move()
+        else:
+            player_2.move()
 
         display.fill(grey)
         board.draw(display, font)
