@@ -1,4 +1,5 @@
 import pygame
+import random
 from enum import Enum
 
 from conga import GameBoard, GameStateMachine
@@ -12,6 +13,11 @@ class State(Enum):
 
 prev_pos = []
 current_state = State.CHOOSE_CELL
+
+
+def get_move(game_sm):
+    moves = game_sm.get_all_moves(game_sm.current_player)
+    return random.choice(moves)
 
 
 def update(game_sm, cell_pos):
@@ -42,10 +48,14 @@ def run(board, game_sm):
                     int(4 - mouse_pos[1] / cell_size)
                 ]
 
-        if mouse_press:
-            move = update(game_sm, cell_pos)
-            if move is not None:
-                game_sm.update(move)
+        if game_sm.current_player == black:
+            if mouse_press:
+                move = update(game_sm, cell_pos)
+                if move is not None:
+                    game_sm.update(move)
+        else:
+            move = get_move(game_sm)
+            game_sm.update(move)
 
         display.fill(grey)
         board.draw(display, font)
