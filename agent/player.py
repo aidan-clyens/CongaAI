@@ -1,4 +1,5 @@
 from enum import Enum
+import random
 
 
 class State(Enum):
@@ -11,7 +12,7 @@ class HumanPlayer:
         self.prev_pos = []
         self.current_state = State.CHOOSE_CELL
 
-    def update(self, game_sm, mouse_press, cell_pos):
+    def move(self, game_sm, mouse_press, cell_pos):
         if mouse_press:
             if self.current_state == State.CHOOSE_CELL:
                 if game_sm.check_cell(cell_pos):
@@ -22,3 +23,9 @@ class HumanPlayer:
                     self.current_state = State.CHOOSE_CELL
                     move = [self.prev_pos, cell_pos]
                     return move
+
+
+class RandomPlayer:
+    def move(self, game_sm):
+        moves = game_sm.get_all_moves(game_sm.current_player)
+        return random.choice(moves)

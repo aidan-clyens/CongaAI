@@ -1,1 +1,1 @@
-from .agent import HumanPlayer
+from .player import HumanPlayer, RandomPlayer
