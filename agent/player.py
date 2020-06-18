@@ -63,11 +63,11 @@ class AIPlayer:
                         -math.inf,
                         math.inf
                     )
+            self.game_sm.board.load_board(prev_board)
+            self.game_sm.current_player = self.colour
             if score > max_score:
                 max_score = score
                 best_move = move
-            self.game_sm.board.load_board(prev_board)
-            self.game_sm.current_player = self.colour
         self.game_sm.update(best_move)
 
     def minimax(self, move, player, depth, alpha, beta):
@@ -93,12 +93,12 @@ class AIPlayer:
                     alpha,
                     beta
                 )
+                self.game_sm.board.load_board(prev_board)
+                self.game_sm.current_player = player
                 max_score = max(max_score, score)
                 alpha = max(alpha, score)
                 if beta <= alpha:
                     break
-                self.game_sm.board.load_board(prev_board)
-                self.game_sm.current_player = player
             return max_score
         # Minimizing
         else:
@@ -112,12 +112,12 @@ class AIPlayer:
                     alpha,
                     beta
                 )
+                self.game_sm.board.load_board(prev_board)
+                self.game_sm.current_player = player
                 min_score = min(min_score, score)
                 beta = min(beta, score)
                 if beta <= alpha:
                     break
-                self.game_sm.board.load_board(prev_board)
-                self.game_sm.current_player = player
             return min_score
 
     def evaluate(self):
