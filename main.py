@@ -29,6 +29,11 @@ def run(board, game_sm):
             move = player_2.move()
             game_sm.update(move)
 
+        # Check win condition
+        if game_sm.check_win():
+            running = False
+            print(game_sm.current_player, "wins!")
+
         display.fill(grey)
         board.draw(display, font)
 

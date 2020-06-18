@@ -16,9 +16,6 @@ class GameStateMachine:
             self.current_player = black
         elif self.current_player == black:
             self.current_player = white
-        # Check lose condition
-        if len(self.get_all_moves(self.current_player)) == 0:
-            print(self.current_player, "loses!")
 
     def check_cell(self, src_pos):
         src = self.board.board[src_pos[0]][src_pos[1]]
@@ -51,6 +48,14 @@ class GameStateMachine:
                 return False
 
         return True
+
+    def check_win(self):
+        if self.current_player == white:
+            other_player = black
+        else:
+            other_player = black
+
+        return len(self.get_all_moves(other_player)) == 0
 
     def get_all_moves(self, player):
         moves = []
