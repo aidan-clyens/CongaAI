@@ -1,6 +1,6 @@
 import pygame
 
-from conga import GameBoard, GameStateMachine
+from conga import GameBoard, GameState
 from conga import window_width, window_height, cell_size, white, black, grey
 
 from agent import HumanPlayer, RandomPlayer, AIPlayer
@@ -54,7 +54,7 @@ def main():
 
     # Init game board
     board = GameBoard()
-    game_sm = GameStateMachine(board)
+    game_sm = GameState(board)
 
     # Init players
     global player_1

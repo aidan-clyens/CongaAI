@@ -1,3 +1,3 @@
 from .game_board import *
-from .state_machine import *
+from .game_state import *
 from .constants import *
