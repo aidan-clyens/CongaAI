@@ -23,11 +23,9 @@ def run(board, game_sm):
                 ]
 
         if game_sm.current_player == black:
-            move = player_1.move(mouse_press, cell_pos)
-            game_sm.update(move)
+            player_1.move()
         else:
-            move = player_2.move()
-            game_sm.update(move)
+            player_2.move()
 
         # Check win condition
         if game_sm.check_win():
@@ -61,7 +59,7 @@ def main():
     # Init players
     global player_1
     global player_2
-    player_1 = HumanPlayer(game_sm)
+    player_1 = RandomPlayer(game_sm)
     player_2 = RandomPlayer(game_sm)
 
     # Run game

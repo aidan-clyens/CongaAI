@@ -23,7 +23,7 @@ class HumanPlayer:
                 if self.game_sm.check_move(self.prev_pos, cell_pos):
                     self.current_state = State.CHOOSE_CELL
                     move = [self.prev_pos, cell_pos]
-                    return move
+                    self.game_sm.update(move)
 
 
 class RandomPlayer:
@@ -33,4 +33,5 @@ class RandomPlayer:
 
     def move(self):
         moves = self.game_sm.get_all_moves(self.game_sm.current_player)
-        return random.choice(moves)
+        move = random.choice(moves)
+        self.game_sm.update(move)
