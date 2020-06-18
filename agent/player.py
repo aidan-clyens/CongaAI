@@ -110,7 +110,6 @@ class AIPlayer:
             return min_score
 
     def evaluate(self):
-        # Number of black cells: +
-        # Number of white cells: -
-        return len(self.game_sm.board.get_cells("black")) \
-            - len(self.game_sm.board.get_cells("white"))
+        # Number of black moves: +
+        # Number of white moves: -
+        return len(self.game_sm.black_moves) - len(self.game_sm.white_moves)
