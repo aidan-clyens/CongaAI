@@ -22,7 +22,7 @@ def run(board, game_sm):
                     int(4 - mouse_pos[1] / cell_size)
                 ]
 
-        if game_sm.current_player == black:
+        if game_sm.current_player == "black":
             player_1.move()
         else:
             player_2.move()

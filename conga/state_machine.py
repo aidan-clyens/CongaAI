@@ -4,7 +4,7 @@ from .constants import black, white
 class GameStateMachine:
     def __init__(self, board):
         self.board = board
-        self.current_player = black
+        self.current_player = "black"
         self.prev_pos = []
 
     def update(self, move):
@@ -12,10 +12,10 @@ class GameStateMachine:
             return
         self.board.move(move[0], move[1])
         # Change player after a successful move
-        if self.current_player == white:
-            self.current_player = black
-        elif self.current_player == black:
-            self.current_player = white
+        if self.current_player == "white":
+            self.current_player = "black"
+        elif self.current_player == "black":
+            self.current_player = "white"
 
     def check_cell(self, src_pos):
         src = self.board.board[src_pos[0]][src_pos[1]]
@@ -50,10 +50,10 @@ class GameStateMachine:
         return True
 
     def check_win(self):
-        if self.current_player == white:
-            other_player = black
+        if self.current_player == "white":
+            other_player = "black"
         else:
-            other_player = black
+            other_player = "black"
 
         return len(self.get_all_moves(other_player)) == 0
 
@@ -72,3 +72,9 @@ class GameStateMachine:
                     moves.append([src_pos, [x, y]])
 
         return moves
+
+    def get_other_player(self, player):
+        if player == "white":
+            return "black"
+        else:
+            return "white"

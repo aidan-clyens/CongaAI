@@ -6,8 +6,8 @@ from .constants import cell_size, white, black
 class GameBoard:
     def __init__(self):
         self.board = [[Cell() for i in range(4)] for j in range(4)]
-        self.board[0][3] = Cell(white, 10)
-        self.board[3][0] = Cell(black, 10)
+        self.board[0][3] = Cell("white", 10)
+        self.board[3][0] = Cell("black", 10)
 
     def move(self, src_pos, dest_pos):
         [dx, dy] = self.get_direction(src_pos, dest_pos)
@@ -48,10 +48,15 @@ class GameBoard:
 
                 cell = self.board[x][y]
                 if cell.num_stones != 0:
+                    if cell.colour == "white":
+                        colour = white
+                    else:
+                        colour = black
+
                     text = font.render(
                         str(cell.num_stones),
                         False,
-                        cell.colour
+                        colour
                     )
                     text_pos = [
                         rect.x + int(cell_size / 8),
