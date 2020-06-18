@@ -1,6 +1,6 @@
 from enum import Enum
 
-from .constants import cell_size, black, white
+from .constants import black, white
 
 
 class State(Enum):
