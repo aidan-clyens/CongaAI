@@ -40,7 +40,14 @@ class GameStateMachine:
 
     def check_cell(self, src_pos):
         src = self.board.board[src_pos[0]][src_pos[1]]
-        return src.colour is not None and src.colour == self.current_player
+        if src.colour is None or src.colour != self.current_player:
+            return False
+
+        moves = self.get_all_moves_from_src(src_pos)
+        if len(moves) == 0:
+            return False
+
+        return True
 
     def check_move(self, src_pos, dest_pos):
         [dx, dy] = self.board.get_direction(src_pos, dest_pos)
