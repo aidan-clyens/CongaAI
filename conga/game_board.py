@@ -1,4 +1,6 @@
-from .constants import white, black
+import pygame
+
+from .constants import cell_size, white, black
 
 
 class GameBoard:
@@ -32,6 +34,30 @@ class GameBoard:
         for cell in cells:
             if cell.num_stones == 0:
                 cell.colour = None
+
+    def draw(self, display, font):
+        for x in range(4):
+            for y in range(4):
+                rect = pygame.Rect(
+                    x*cell_size,
+                    (3-y)*cell_size,
+                    cell_size,
+                    cell_size
+                )
+                pygame.draw.rect(display, black, rect, 1)
+
+                cell = self.board[x][y]
+                if cell.num_stones != 0:
+                    text = font.render(
+                        str(cell.num_stones),
+                        False,
+                        cell.colour
+                    )
+                    text_pos = [
+                        rect.x + int(cell_size / 8),
+                        rect.y + int(cell_size / 8)
+                    ]
+                    display.blit(text, text_pos)
 
     def get_direction(self, src_pos, dest_pos):
         dx = dest_pos[0] - src_pos[0]

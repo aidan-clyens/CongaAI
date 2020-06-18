@@ -1,29 +1,7 @@
 import pygame
 
 from conga import GameBoard, GameStateMachine
-from conga import window_width, window_height, cell_size, grey, black
-
-
-def draw(board):
-    # Draw grid
-    for x in range(4):
-        for y in range(4):
-            rect = pygame.Rect(
-                x*cell_size,
-                (3-y)*cell_size,
-                cell_size,
-                cell_size
-            )
-            pygame.draw.rect(display, black, rect, 1)
-
-            cell = board.board[x][y]
-            if cell.num_stones != 0:
-                text = font.render(str(cell.num_stones), False, cell.colour)
-                text_pos = [
-                    rect.x + int(cell_size / 8),
-                    rect.y + int(cell_size / 8)
-                ]
-                display.blit(text, text_pos)
+from conga import window_width, window_height, cell_size, grey
 
 
 def run(board, game_sm):
@@ -42,7 +20,7 @@ def run(board, game_sm):
 
         display.fill(grey)
 
-        draw(board)
+        board.draw(display, font)
 
         pygame.display.update()
         clock.tick(60)
