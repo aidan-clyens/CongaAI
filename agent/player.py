@@ -48,11 +48,17 @@ class AIPlayer:
     def move(self):
         best_move = None
         max_score = -math.inf
-        for move in self.game_sm.get_all_moves(self.colour):
+
+        if self.colour == "white":
+            moves = self.game_sm.white_moves
+        else:
+            moves = self.game_sm.black_moves
+
+        for move in moves:
             prev_board = copy.deepcopy(self.game_sm.board.board)
             score = self.minimax(
                         move,
-                        self.game_sm.current_player,
+                        self.game_sm.get_other_player(self.colour),
                         self.max_depth
                     )
             if score > max_score:
@@ -60,16 +66,19 @@ class AIPlayer:
                 best_move = move
             self.game_sm.board.load_board(prev_board)
             self.game_sm.current_player = self.colour
-
         self.game_sm.update(best_move)
+        print(len(self.game_sm.black_moves), len(self.game_sm.white_moves))
 
     def minimax(self, move, player, depth):
-        self.game_sm.update(move)
-
-        if depth == 0 or self.game_sm.check_win():
+        if depth == 0 or self.game_sm.get_winner() is not None:
             return self.evaluate()
 
-        moves = self.game_sm.get_all_moves(player)
+        self.game_sm.update(move)
+
+        if player == "white":
+            moves = self.game_sm.white_moves
+        else:
+            moves = self.game_sm.black_moves
 
         # Maximizing
         if player == self.colour:

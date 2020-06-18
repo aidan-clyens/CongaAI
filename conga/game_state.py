@@ -3,11 +3,17 @@ class GameState:
         self.board = board
         self.current_player = "black"
         self.prev_pos = []
+        self.black_moves = self.get_all_moves("black")
+        self.white_moves = self.get_all_moves("white")
 
     def update(self, move):
         if move is None:
             return
         self.board.move(move[0], move[1])
+
+        self.black_moves = self.get_all_moves("black")
+        self.white_moves = self.get_all_moves("white")
+
         # Change player after a successful move
         if self.current_player == "white":
             self.current_player = "black"
@@ -46,10 +52,11 @@ class GameState:
 
         return True
 
-    def check_win(self):
-        return len(
-            self.get_all_moves(self.get_other_player(self.current_player))
-            ) == 0
+    def get_winner(self):
+        if len(self.white_moves) == 0:
+            return "black"
+        elif len(self.black_moves) == 0:
+            return "white"
 
     def get_all_moves(self, player):
         moves = []
