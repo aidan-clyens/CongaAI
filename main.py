@@ -1,15 +1,9 @@
 import pygame
-import random
 
 from conga import GameBoard, GameStateMachine
 from conga import window_width, window_height, cell_size, white, black, grey
 
-from agent import HumanPlayer
-
-
-def get_move(game_sm):
-    moves = game_sm.get_all_moves(game_sm.current_player)
-    return random.choice(moves)
+from agent import HumanPlayer, RandomPlayer
 
 
 def run(board, game_sm):
@@ -29,10 +23,10 @@ def run(board, game_sm):
                 ]
 
         if game_sm.current_player == black:
-            move = player_1.update(game_sm, mouse_press, cell_pos)
+            move = player_1.move(mouse_press, cell_pos)
             game_sm.update(move)
         else:
-            move = get_move(game_sm)
+            move = player_2.move()
             game_sm.update(move)
 
         display.fill(grey)
@@ -61,7 +55,9 @@ def main():
 
     # Init players
     global player_1
-    player_1 = HumanPlayer()
+    global player_2
+    player_1 = HumanPlayer(game_sm)
+    player_2 = RandomPlayer(game_sm)
 
     # Run game
     run(board, game_sm)
