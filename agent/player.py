@@ -49,12 +49,16 @@ class AIPlayer:
         best_move = None
         max_score = -math.inf
 
+        self.search_counter = 0
+        self.max_depth_explored = 0
+
         if self.colour == "white":
             moves = self.game_sm.white_moves
         else:
             moves = self.game_sm.black_moves
 
         for move in moves:
+            self.search_counter += 1
             prev_board = copy.deepcopy(self.game_sm.board.board)
             score = self.minimax(
                         move,
@@ -69,9 +73,11 @@ class AIPlayer:
                 max_score = score
                 best_move = move
         self.game_sm.update(best_move)
+        print("Moves searched =", self.search_counter, ", Max depth =", self.max_depth_explored)
 
     def minimax(self, move, player, depth, alpha, beta):
         if depth == 0 or self.game_sm.get_winner() is not None:
+            self.max_depth_explored = self.max_depth - depth
             return self.evaluate()
 
         self.game_sm.update(move)
@@ -85,6 +91,7 @@ class AIPlayer:
         if player == self.colour:
             max_score = -math.inf
             for move in moves:
+                self.search_counter += 1
                 prev_board = copy.deepcopy(self.game_sm.board.board)
                 score = self.minimax(
                     move,
@@ -104,6 +111,7 @@ class AIPlayer:
         else:
             min_score = math.inf
             for move in moves:
+                self.search_counter += 1
                 prev_board = copy.deepcopy(self.game_sm.board.board)
                 score = self.minimax(
                     move,
