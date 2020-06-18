@@ -8,6 +8,7 @@ from agent import HumanPlayer, RandomPlayer, AIPlayer
 
 def run(board, game_sm):
     running = True
+    move_count = 0
     while running:
         mouse_press = False
         cell_pos = []
@@ -22,22 +23,25 @@ def run(board, game_sm):
                     int(4 - mouse_pos[1] / cell_size)
                 ]
 
-        # Check win condition
-        if game_sm.check_win():
-            running = False
-            print(game_sm.current_player, "wins!")
+        display.fill(grey)
+        board.draw(display, font)
+
 
         if game_sm.current_player == "black":
             player_1.move()
         else:
             player_2.move()
 
-        display.fill(grey)
-        board.draw(display, font)
-
         pygame.display.update()
         clock.tick(60)
 
+        move_count += 1
+
+        # Check win condition
+        winner = game_sm.get_winner()
+        if winner is not None:
+            running = False
+            print(winner, "wins in", move_count, "moves!")
 
 def main():
     pygame.init()
