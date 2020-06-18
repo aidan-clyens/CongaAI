@@ -50,12 +50,9 @@ class GameStateMachine:
         return True
 
     def check_win(self):
-        if self.current_player == "white":
-            other_player = "black"
-        else:
-            other_player = "black"
-
-        return len(self.get_all_moves(other_player)) == 0
+        return len(
+            self.get_all_moves(self.get_other_player(self.current_player))
+            ) == 0
 
     def get_all_moves(self, player):
         moves = []
