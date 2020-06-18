@@ -1,37 +1,22 @@
-from enum import Enum
-
 from .constants import black, white
-
-
-class State(Enum):
-    CHOOSE_CELL = 1
-    CHOOSE_DIRECTION = 2
 
 
 class GameStateMachine:
     def __init__(self, board):
         self.board = board
-        self.current_state = State.CHOOSE_CELL
         self.current_player = black
         self.prev_pos = []
 
-    def update(self, cell_pos):
-        if self.current_state == State.CHOOSE_CELL:
-            if self.check_cell(cell_pos):
-                self.current_state = State.CHOOSE_DIRECTION
-                self.prev_pos = cell_pos
-        elif self.current_state == State.CHOOSE_DIRECTION:
-            if self.check_move(self.prev_pos, cell_pos):
-                self.current_state = State.CHOOSE_CELL
-                self.board.move(self.prev_pos, cell_pos)
-                # Change player after a successful move
-                if self.current_player == white:
-                    self.current_player = black
-                elif self.current_player == black:
-                    self.current_player = white
-                # Check lose condition
-                if len(self.get_all_moves(self.current_player)) == 0:
-                    print(self.current_player, "loses!")
+    def update(self, move):
+        self.board.move(move[0], move[1])
+        # Change player after a successful move
+        if self.current_player == white:
+            self.current_player = black
+        elif self.current_player == black:
+            self.current_player = white
+        # Check lose condition
+        if len(self.get_all_moves(self.current_player)) == 0:
+            print(self.current_player, "loses!")
 
     def check_cell(self, src_pos):
         src = self.board.board[src_pos[0]][src_pos[1]]

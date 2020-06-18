@@ -1,25 +1,53 @@
 import pygame
+from enum import Enum
 
 from conga import GameBoard, GameStateMachine
-from conga import window_width, window_height, cell_size, grey
+from conga import window_width, window_height, cell_size, white, black, grey
+
+
+class State(Enum):
+    CHOOSE_CELL = 1
+    CHOOSE_DIRECTION = 2
+
+
+prev_pos = []
+current_state = State.CHOOSE_CELL
+
+
+def update(game_sm, cell_pos):
+    global current_state, prev_pos
+    if current_state == State.CHOOSE_CELL:
+        if game_sm.check_cell(cell_pos):
+            current_state = State.CHOOSE_DIRECTION
+            prev_pos = cell_pos
+    elif current_state == State.CHOOSE_DIRECTION:
+        if game_sm.check_move(prev_pos, cell_pos):
+            current_state = State.CHOOSE_CELL
+            move = [prev_pos, cell_pos]
+            return move
 
 
 def run(board, game_sm):
     running = True
     while running:
+        mouse_press = False
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
             elif event.type == pygame.MOUSEBUTTONUP:
                 mouse_pos = pygame.mouse.get_pos()
+                mouse_press = True
                 cell_pos = [
                     int(mouse_pos[0] / cell_size),
                     int(4 - mouse_pos[1] / cell_size)
                 ]
-                game_sm.update(cell_pos)
+
+        if mouse_press:
+            move = update(game_sm, cell_pos)
+            if move is not None:
+                game_sm.update(move)
 
         display.fill(grey)
-
         board.draw(display, font)
 
         pygame.display.update()
