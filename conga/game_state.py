@@ -1,3 +1,6 @@
+import random
+
+
 class GameState:
     def __init__(self, board):
         self.board = board
@@ -63,6 +66,7 @@ class GameState:
         for cell in self.board.get_cells(player):
             moves += self.get_all_moves_from_src(cell)
 
+        random.shuffle(moves)
         return moves
 
     def get_all_moves_from_src(self, src_pos):
