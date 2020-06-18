@@ -67,7 +67,6 @@ class AIPlayer:
             self.game_sm.board.load_board(prev_board)
             self.game_sm.current_player = self.colour
         self.game_sm.update(best_move)
-        print(len(self.game_sm.black_moves), len(self.game_sm.white_moves))
 
     def minimax(self, move, player, depth):
         if depth == 0 or self.game_sm.get_winner() is not None:
@@ -112,4 +111,11 @@ class AIPlayer:
     def evaluate(self):
         # Number of black moves: +
         # Number of white moves: -
-        return len(self.game_sm.black_moves) - len(self.game_sm.white_moves)
+        num_moves_white = 0
+        for cell_pos in self.game_sm.board.get_cells("white"):
+            cell = self.game_sm.board.board[cell_pos[0]][cell_pos[1]]
+            num_moves_white += cell.num_stones * cell.num_moves_from_cell
+
+        num_moves_black = len(self.game_sm.black_moves)
+
+        return num_moves_black - num_moves_white

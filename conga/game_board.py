@@ -111,3 +111,4 @@ class Cell:
     def __init__(self, colour=None, num_stones=0):
         self.colour = colour
         self.num_stones = num_stones
+        self.num_moves_from_cell = 0

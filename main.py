@@ -26,7 +26,6 @@ def run(board, game_sm):
         display.fill(grey)
         board.draw(display, font)
 
-
         if game_sm.current_player == "black":
             player_1.move()
         else:
@@ -42,6 +41,7 @@ def run(board, game_sm):
         if winner is not None:
             running = False
             print(winner, "wins in", move_count, "moves!")
+
 
 def main():
     pygame.init()

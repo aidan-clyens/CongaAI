@@ -72,6 +72,8 @@ class GameState:
                 if self.check_move(src_pos, [x, y]):
                     moves.append([src_pos, [x, y]])
 
+        src = self.board.board[src_pos[0]][src_pos[1]]
+        src.num_moves_from_cell = len(moves)
         return moves
 
     def get_other_player(self, player):
