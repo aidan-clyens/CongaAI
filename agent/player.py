@@ -59,7 +59,9 @@ class AIPlayer:
             score = self.minimax(
                         move,
                         self.game_sm.get_other_player(self.colour),
-                        self.max_depth
+                        self.max_depth,
+                        -math.inf,
+                        math.inf
                     )
             if score > max_score:
                 max_score = score
@@ -68,7 +70,7 @@ class AIPlayer:
             self.game_sm.current_player = self.colour
         self.game_sm.update(best_move)
 
-    def minimax(self, move, player, depth):
+    def minimax(self, move, player, depth, alpha, beta):
         if depth == 0 or self.game_sm.get_winner() is not None:
             return self.evaluate()
 
@@ -87,9 +89,14 @@ class AIPlayer:
                 score = self.minimax(
                     move,
                     self.game_sm.get_other_player(player),
-                    depth - 1
+                    depth - 1,
+                    alpha,
+                    beta
                 )
                 max_score = max(max_score, score)
+                alpha = max(alpha, score)
+                if beta <= alpha:
+                    break
                 self.game_sm.board.load_board(prev_board)
                 self.game_sm.current_player = player
             return max_score
@@ -101,9 +108,14 @@ class AIPlayer:
                 score = self.minimax(
                     move,
                     self.game_sm.get_other_player(player),
-                    depth - 1
+                    depth - 1,
+                    alpha,
+                    beta
                 )
                 min_score = min(min_score, score)
+                beta = min(beta, score)
+                if beta <= alpha:
+                    break
                 self.game_sm.board.load_board(prev_board)
                 self.game_sm.current_player = player
             return min_score
