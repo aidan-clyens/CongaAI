@@ -64,6 +64,9 @@ class GameBoard:
                     ]
                     display.blit(text, text_pos)
 
+    def load_board(self, new_board):
+        self.board = new_board
+
     def get_direction(self, src_pos, dest_pos):
         dx = dest_pos[0] - src_pos[0]
         dy = dest_pos[1] - src_pos[1]
