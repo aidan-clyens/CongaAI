@@ -1,5 +1,7 @@
 from enum import Enum
 import random
+import copy
+import math
 
 
 class State(Enum):
@@ -35,3 +37,71 @@ class RandomPlayer:
         moves = self.game_sm.get_all_moves(self.game_sm.current_player)
         move = random.choice(moves)
         self.game_sm.update(move)
+
+
+class AIPlayer:
+    def __init__(self, game_sm, colour):
+        self.game_sm = game_sm
+        self.colour = colour
+        self.max_depth = 2
+
+    def move(self):
+        best_move = None
+        max_score = -math.inf
+        for move in self.game_sm.get_all_moves(self.colour):
+            prev_board = copy.deepcopy(self.game_sm.board.board)
+            score = self.minimax(
+                        move,
+                        self.game_sm.current_player,
+                        self.max_depth
+                    )
+            if score > max_score:
+                max_score = score
+                best_move = move
+            self.game_sm.board.load_board(prev_board)
+            self.game_sm.current_player = self.colour
+
+        self.game_sm.update(best_move)
+
+    def minimax(self, move, player, depth):
+        self.game_sm.update(move)
+
+        if depth == 0 or self.game_sm.check_win():
+            return self.evaluate()
+
+        moves = self.game_sm.get_all_moves(player)
+
+        # Maximizing
+        if player == self.colour:
+            max_score = -math.inf
+            for move in moves:
+                prev_board = copy.deepcopy(self.game_sm.board.board)
+                score = self.minimax(
+                    move,
+                    self.game_sm.get_other_player(player),
+                    depth - 1
+                )
+                max_score = max(max_score, score)
+                self.game_sm.board.load_board(prev_board)
+                self.game_sm.current_player = player
+            return max_score
+        # Minimizing
+        else:
+            min_score = math.inf
+            for move in moves:
+                prev_board = copy.deepcopy(self.game_sm.board.board)
+                score = self.minimax(
+                    move,
+                    self.game_sm.get_other_player(player),
+                    depth - 1
+                )
+                min_score = min(min_score, score)
+                self.game_sm.board.load_board(prev_board)
+                self.game_sm.current_player = player
+            return min_score
+
+    def evaluate(self):
+        # Number of black cells: +
+        # Number of white cells: -
+        return len(self.game_sm.board.get_cells("black")) \
+            - len(self.game_sm.board.get_cells("white"))

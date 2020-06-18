@@ -1,1 +1,1 @@
-from .player import HumanPlayer, RandomPlayer
+from .player import HumanPlayer, RandomPlayer, AIPlayer

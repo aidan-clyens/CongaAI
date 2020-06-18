@@ -3,7 +3,7 @@ import pygame
 from conga import GameBoard, GameStateMachine
 from conga import window_width, window_height, cell_size, white, black, grey
 
-from agent import HumanPlayer, RandomPlayer
+from agent import HumanPlayer, RandomPlayer, AIPlayer
 
 
 def run(board, game_sm):
@@ -59,7 +59,7 @@ def main():
     # Init players
     global player_1
     global player_2
-    player_1 = RandomPlayer(game_sm)
+    player_1 = AIPlayer(game_sm, "black")
     player_2 = RandomPlayer(game_sm)
 
     # Run game
