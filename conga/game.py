@@ -75,6 +75,8 @@ class Game:
                 else:
                     self.player_2.move()
 
+            self.display.fill(grey)
+            self.board.draw(self.display, self.font)
             pygame.display.update()
             self.clock.tick(60)
 
