@@ -61,9 +61,6 @@ class Game:
                         int(4 - mouse_pos[1] / cell_size)
                     ]
 
-            self.display.fill(grey)
-            self.board.draw(self.display, self.font)
-
             if self.game_sm.current_player == "black":
                 if self.player_1_type == "human":
                     self.player_1.move(mouse_press, cell_pos)

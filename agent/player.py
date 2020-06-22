@@ -129,13 +129,14 @@ class AIPlayer:
             return min_score
 
     def evaluate(self):
-        # Number of black moves: +
-        # Number of white moves: -
-        num_moves_white = 0
-        for cell_pos in self.game_sm.board.get_cells("white"):
+        num_moves_other = 0
+        for cell_pos in self.game_sm.board.get_cells(self.game_sm.get_other_player(self.colour)):
             cell = self.game_sm.board.board[cell_pos[0]][cell_pos[1]]
-            num_moves_white += cell.num_stones * cell.num_moves_from_cell
+            num_moves_other += cell.num_stones * cell.num_moves_from_cell
 
-        num_moves_black = len(self.game_sm.black_moves)
+        if self.colour == "black":
+            num_moves_player = len(self.game_sm.black_moves)
+        else:
+            num_moves_player = len(self.game_sm.white_moves)
 
-        return num_moves_black - num_moves_white
+        return num_moves_player - num_moves_other
